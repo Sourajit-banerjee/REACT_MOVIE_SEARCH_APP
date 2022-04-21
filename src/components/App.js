@@ -8,11 +8,20 @@ class App extends React.Component {
   {
     //*make api cvalls over here
     //*since we want the movies to be added to the state so over we dispatch() an action
-    this.props.store.dispatch({
+    const{ store}=this.props;
+
+//todo: the subscribes call back is called only after dispatch() and den its printing the console(store,egtState())
+
+store.subscribe(()=>{
+  console.log("updated")
+  this.forceUpdate() //?shouildn't be used just here used
+})
+
+    store.dispatch({
       type:'ADD_MOVIES',
       movies:data
     })
-    console.log("after Component did m",this.props.store.getState()) //!prints the updated state but ui not reflected 
+    console.log("after Component did m",store.getState()) //!prints the updated state but ui not reflected 
     //!Doing just this will not change the ui since we are updating the state bbut we are not doing anything on state schange
     //!we have to subscribe to state changes
   }
@@ -20,6 +29,7 @@ class App extends React.Component {
  
 
 render(){
+  console.log("RENDER")
   const movies=this.props.store.getState()
   return (
     <div className="App">
