@@ -1,10 +1,11 @@
-import { ADD_MOVIES,ADD_FAVOURITES ,REMOVE_FROM_FAVOURITES} from "../actions";
+import { ADD_MOVIES,ADD_FAVOURITES ,REMOVE_FROM_FAVOURITES,SET_SHOW_FAVOURITES} from "../actions";
 
 const intialMoviesState={
     list:[],
-    favourites:[]
+    favourites:[],
+    showFavourites:false
 }
-export default function movies(state=intialMoviesState,action){  //* state changed from from state=[] to the present one for adding favourites
+export function movies(state=intialMoviesState,action){  //* state changed from from state=[] to the present one for adding favourites
      //* if somehow state becomes undefined in thatr case we want to set it as arry since we will get array of movies
 
     //?reducers always return a new state,it cannot modify the state directly(see the cycle)
@@ -30,14 +31,41 @@ export default function movies(state=intialMoviesState,action){  //* state chang
           favourites: [...state.favourites, action.movie],
         };
       case REMOVE_FROM_FAVOURITES:
-        const filteredArray = state.favourites.filter((movie) => {
-          return movie.Title !== action.movie.Title;
-        })
+        const filteredArray = state.favourites.filter((movie) => 
+        movie.Title !== action.movie.Title
+        )
         return {
           ...state,
           favourites:filteredArray //NEW ARRAY WITHOUT THE MOVIE WHICH WAS PASSED TO ACTIONS CREATOR
         };
+        case SET_SHOW_FAVOURITES:
+          return{
+            ...state,
+            showFavourites:action.val
+          }
       default:
         return state;
     }
+}
+
+
+//todo: Reduceer fopr seaerch
+
+const initialSearchState={
+  result:{}
+}
+
+export function search(state=initialSearchState,action){
+  return state;
+}
+
+const intialRootState={
+  movies:intialMoviesState,
+  search:initialSearchState
+}
+export  function rootReducer(state=intialRootState,action){
+  return{
+    movies:movies(state,action),
+    search:search(state,action)
+  }
 }
