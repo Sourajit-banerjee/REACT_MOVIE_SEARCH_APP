@@ -3,6 +3,7 @@ import {data} from '../data' //*we dont want ot directly get dtyata from the fil
 import Navbar from './Navbar'
 import MovieCard from './MovieCard'
 import { addMovies ,setShowFavourites} from '../actions'
+import { StoreContext } from '../index'
 class App extends React.Component {
 
   componentDidMount()
@@ -51,6 +52,7 @@ store.subscribe(()=>{
  }
 
 render(){
+
 const{movies,search}=this.props.store.getState()
 
   console.log("RENDER",this.props.store.getState())
@@ -58,29 +60,38 @@ const{movies,search}=this.props.store.getState()
 
   const displayMovies=showFavourites?favourites:list; //*if show nfav is true den show only favourites else we display the lost of movies
 
-  return (
-    <div className="App">
-     <Navbar dispatch={this.props.store.dispatch} search={search}/>
-     <div className="main">
-       <div className="tabs">
-          <div className={`tab ${showFavourites?'':'active-tabs'}`} onClick={()=>this.onChangeTab(false)}>Movies</div>
-          <div className={`tab ${showFavourites?'active-tabs':''}`} onClick={()=>this.onChangeTab(true)}>Favourites</div>
-       </div>
+
+  return(
+    <StoreContext.Consumer>
+      {()=>{  //*store is passed aas an arg to the call back internally by react,when it is called,not only store whatever
+      //*we pass to the value will be passed here
+         return (
+          <div className="App">
+           <Navbar dispatch={this.props.store.dispatch} search={search}/>
+           <div className="main">
+             <div className="tabs">
+                <div className={`tab ${showFavourites?'':'active-tabs'}`} onClick={()=>this.onChangeTab(false)}>Movies</div>
+                <div className={`tab ${showFavourites?'active-tabs':''}`} onClick={()=>this.onChangeTab(true)}>Favourites</div>
+             </div>
+       
+           <div className="list">
+            {displayMovies.map((movie,index)=>(  //*index args gives the index of movie in the array
+            <MovieCard 
+            movie={movie} 
+            key={`movies-${index}`} 
+            dispatch={this.props.store.dispatch}
+            isFavourite={this.handleUnFavourite(movie)} 
+            /> //sending the doispatch method 
+            ))}
+           </div>
+          </div>
+          <div>{displayMovies.length===0?<div className='no-movies'>No movies to display!</div>:null}</div>
+        </div>
+        );
+      }}
+    </StoreContext.Consumer>
+  )
  
-     <div className="list">
-      {displayMovies.map((movie,index)=>(  //*index args gives the index of movie in the array
-      <MovieCard 
-      movie={movie} 
-      key={`movies-${index}`} 
-      dispatch={this.props.store.dispatch}
-      isFavourite={this.handleUnFavourite(movie)} 
-      /> //sending the doispatch method 
-      ))}
-     </div>
-    </div>
-    <div>{displayMovies.length===0?<div className='no-movies'>No movies to display!</div>:null}</div>
-  </div>
-  );
   }
 }
 
