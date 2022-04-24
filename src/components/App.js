@@ -36,8 +36,9 @@ store.subscribe(()=>{
  //todo isFav function to show unfav option
 
  handleUnFavourite=(movie)=>{
-  const {favourites}=this.props.store.getState();
-  const index=favourites.indexOf(movie);
+  const {movies}=this.props.store.getState();
+
+  const index=movies.favourites.indexOf(movie);
   if(index!==-1)
   {
     return true
@@ -50,15 +51,16 @@ store.subscribe(()=>{
  }
 
 render(){
-  console.log("RENDER",this.props.store.getState())
+const{movies,search}=this.props.store.getState()
 
-  const {list,favourites,showFavourites}=this.props.store.getState() //since how state is {list:[],fav:[]}
+  console.log("RENDER",this.props.store.getState())
+  const {list,favourites,showFavourites}=movies;   //this.props.store.getState() //since how state is {list:[],fav:[]}
 
   const displayMovies=showFavourites?favourites:list; //*if show nfav is true den show only favourites else we display the lost of movies
 
   return (
     <div className="App">
-     <Navbar/>
+     <Navbar dispatch={this.props.store.dispatch} search={search}/>
      <div className="main">
        <div className="tabs">
           <div className={`tab ${showFavourites?'':'active-tabs'}`} onClick={()=>this.onChangeTab(false)}>Movies</div>
