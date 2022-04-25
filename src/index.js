@@ -63,7 +63,9 @@ console.log("StoreContext",StoreContext)
 class Provider extends React.Component{
     render(){
         const {store}=this.props
-        return <StoreContext.Provider value={store}>
+        return <StoreContext.Provider value={store}> 
+        {/* //!whenerver store changes all of the consum,ers changes
+        //!it means that all the components and ist descendants using store will be re rendered when store is changed */}
             {this.props.children}   
             {/* to render the children of provider componet that is app */}
         </StoreContext.Provider>
@@ -74,15 +76,13 @@ class Provider extends React.Component{
 // console.log('after state:',store.getState())
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-/* <StoreContext.Provider value={store}> //?now our store object is accessable to all descendants of app component */}
-                                            //?we can basically wrap any component withing the storecontext and then ist descendants will have the store or whatever obj we
+// /* <StoreContext.Provider value={store}> //?now our store object is accessable to all descendants of app component */}
+                                             //?we can basically wrap any component withing the storecontext and then ist descendants will have the store or whatever obj we
 <Provider store={store}>
 {/* <App store={store} /> */}
 <App  />
 </Provider>
-
-
-// </StoreContext.Provider> //*instead of passing like these we will create a class
+//</StoreContext.Provider>      //*instead of passing like these we will create a class
 
 ) //passing the store to app.js
 

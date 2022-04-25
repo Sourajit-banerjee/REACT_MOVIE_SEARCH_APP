@@ -62,12 +62,12 @@ const{movies,search}=this.props.store.getState()
 
 
   return(
-    <StoreContext.Consumer>
-      {()=>{  //*store is passed aas an arg to the call back internally by react,when it is called,not only store whatever
+
+     //*store is passed aas an arg to the call back internally by react,when it is called,not only store whatever
       //*we pass to the value will be passed here
-         return (
+  
           <div className="App">
-           <Navbar dispatch={this.props.store.dispatch} search={search}/>
+           <Navbar  search={search}/>
            <div className="main">
              <div className="tabs">
                 <div className={`tab ${showFavourites?'':'active-tabs'}`} onClick={()=>this.onChangeTab(false)}>Movies</div>
@@ -88,11 +88,23 @@ const{movies,search}=this.props.store.getState()
           <div>{displayMovies.length===0?<div className='no-movies'>No movies to display!</div>:null}</div>
         </div>
         );
-      }}
-    </StoreContext.Consumer>
-  )
- 
+      }
+
+}
+
+
+class AppWrapper extends React.Component{
+//!we created this wrappper instead of writing it inside the above apps render because,
+//!then our other function above CompoennetDidM,unfav,etc,would have not got these store value
+//!so we pass the store as prop to the App compoenent
+  render(){
+    return(
+  <StoreContext.Consumer> 
+    {/* //!we can only use Consumer inside render() function */}
+    {(store)=> <App store={store}/>}
+  </StoreContext.Consumer>
+    );
   }
 }
 
-export default App;
+export default  AppWrapper;
