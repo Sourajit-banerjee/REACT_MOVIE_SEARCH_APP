@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/REACT_MOVIE_SEARCH_APP/static/css/main.12c72598.css",
+    "main.js": "/REACT_MOVIE_SEARCH_APP/static/js/main.2107aed5.js",
+    "index.html": "/REACT_MOVIE_SEARCH_APP/index.html",
+    "main.12c72598.css.map": "/REACT_MOVIE_SEARCH_APP/static/css/main.12c72598.css.map",
+    "main.2107aed5.js.map": "/REACT_MOVIE_SEARCH_APP/static/js/main.2107aed5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.12c72598.css",
+    "static/js/main.2107aed5.js"
+  ]
+}
