@@ -2,6 +2,8 @@ import React from 'react'
 import { StoreContext } from '..'
 import {addMoviesToList,handleMovieSearch} from '../actions'
 import { data } from '../data'
+// import { connect } from '../index'
+import { connect } from 'react-redux'
 class Navbar extends React.Component
 {
     constructor(props){
@@ -61,14 +63,21 @@ class Navbar extends React.Component
 }
 
 
-class NavbarWrapper extends React.Component{ //*similarly like App.js
+// class NavbarWrapper extends React.Component{ //*similarly like App.js
 
-    render(){
-        return(
-        <StoreContext.Consumer>
-           {(store)=><Navbar dispatch={store.dispatch}  search={this.props.search}/>} 
-        </StoreContext.Consumer>
-        )
+//     render(){
+//         return(
+//         <StoreContext.Consumer>
+//            {(store)=><Navbar dispatch={store.dispatch}  search={this.props.search}/>} 
+//         </StoreContext.Consumer>
+//         )
+//     }
+// }
+
+function mapStateToProps({search}) //* we could also done (state) line app.js but we destructure the state
+{
+    return{
+        search //same as sesrch:search
     }
 }
-export default NavbarWrapper;
+export default connect(mapStateToProps)(Navbar);

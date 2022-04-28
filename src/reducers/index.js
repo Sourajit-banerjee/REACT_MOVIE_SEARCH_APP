@@ -60,7 +60,8 @@ export function movies(state=intialMoviesState,action){
 //todo: Reduceer fopr seaerch
 
 const initialSearchState={
-  result:{},
+  //result:{},
+  result:[],
   showSearchResults:false
 }
 

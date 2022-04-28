@@ -7,6 +7,7 @@ import { createStore,applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import  rootReducer  from './reducers';
 
+import { Provider } from 'react-redux'; //has alrady implememneted the connect and provider for us just use it
 
 //todo:moiddle ware for logging
 
@@ -60,17 +61,81 @@ export const StoreContext=createContext();
 console.log("StoreContext",StoreContext)
 
 
-class Provider extends React.Component{
-    render(){
-        const {store}=this.props
-        return <StoreContext.Provider value={store}> 
-        {/* //!whenerver store changes all of the consum,ers changes
-        //!it means that all the components and ist descendants using store will be re rendered when store is changed */}
-            {this.props.children}   
-            {/* to render the children of provider componet that is app */}
-        </StoreContext.Provider>
-    }
-}
+// class Provider extends React.Component{
+//     render(){
+//         const {store}=this.props
+//         return <StoreContext.Provider value={store}> 
+//         {/* //!whenerver store changes all of the consum,ers changes
+//         //!it means that all the components and ist descendants using store will be re rendered when store is changed */}
+//             {this.props.children}   
+//             {/* to render the children of provider componet that is app */}
+//         </StoreContext.Provider>
+//     }
+// }
+
+//!CONNECT IMPLEMENTATION 
+
+//const ConnectedComponent=connect(callback)(App)
+// export function connect(callback) {
+//   return function (Component) {
+//     //*since connect return me a new component
+//     class ConnectedComponent extends React.Component {
+//       // todo in order for opur connected component to get refreshed automaticallty when satte changes we need it to subscribe to store
+//       constructor(props) {
+//         super(props);
+//        this.unsubscribe= this.props.store.subscribe(() => this.forceUpdate()); //*subscriibe return me a new fucntion which we can use to unsubscribe
+//       }
+//       componentWillUnmount(){
+//           this.unsubscribe();
+//       }
+
+//       render() {
+//         // return (
+//     //       <StoreContext.Consumer>
+//     //         {/* //*we use Store.Context to pass the required data which was requested in callback as props(which is the store) */}
+//     //         {(store) => {
+//     //           const state = store.getState();
+//     //           const dataToBePassedAsProps = callback(state); //todo this callback return me a object having the key value pair(we pass the state right,so we state.movies values will be mapped to movies and so on)
+
+//     //           return (
+//     //             <Component
+//     //               {...dataToBePassedAsProps} //*what spread oper is doin is movies={movies} and search={search} in this way it passes the props
+//     //               dispatch={store.dispatch}
+//     //             />
+//     //           );
+//     //           //*returns the App componenet only(dont hardcode app as then it work for any compo passed in func)
+//     //         }}
+//     //       </StoreContext.Consumer>
+
+// //!After wraaperr
+// const {store}=this.props
+//         const state = store.getState();
+//               const dataToBePassedAsProps = callback(state); //todo this callback return me a object having the key value pair(we pass the state right,so we state.movies values will be mapped to movies and so on)
+
+//               return (
+//                 <Component
+//                   {...dataToBePassedAsProps} //*what spread oper is doin is movies={movies} and search={search} in this way it passes the props
+//                   dispatch={store.dispatch}
+//                 />
+//               );
+//       }
+//      }
+
+    // class ConnectedComponentWrapper extends React.Component {  //* SO THAT OUR CONSTRCUTOR has acces to store for subscribing
+    //   render() {
+    //     return (
+    //       <StoreContext.Consumer>
+    //         {(store) => <ConnectedComponent store={store} />}
+    //       </StoreContext.Consumer>
+    //     );
+    //   }
+      
+    // }
+//     return ConnectedComponentWrapper
+//   };
+//}
+
+
 
 
 // console.log('after state:',store.getState())
